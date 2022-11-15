@@ -22,7 +22,6 @@ int main(int argc, char const *argv[])
     char badword[25];   // Bad word of the user
     char **list = NULL; // List of bad words
     int i = 0;          // Loop variable
-    int test = 0;       // Test variable
     char *p, s[100];    // Variables for the fgets
 
     printf("____________________________________________\n");
@@ -66,11 +65,9 @@ int main(int argc, char const *argv[])
             printf("|__________________________________________|\n");
             do // Loop for write into the chat
             {
-                writeSentence(sentence, username, list, i, test);
-                test++;
+                writeSentence(sentence, username, list, i);
             } while (strcmp(sentence, "exit") != 0); // Exit the loop if the user write "exit"
             printf("\n\n%s left the chat\n", username);
-            test = 0;   // Reset the test variable
             choice = 0; // Reset the choice
             break;
 

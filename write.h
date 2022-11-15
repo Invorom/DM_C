@@ -6,6 +6,6 @@
 #include <string.h>
 #include "censure.h"
 
-void writeSentence(char *sentence, char *username, char **list, int i, int test);
+void writeSentence(char *sentence, char *username, char **list, int i);
 
 #endif
