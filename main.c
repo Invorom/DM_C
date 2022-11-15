@@ -8,6 +8,7 @@ Description: This program is a chat who censure the bad words
 #include <stdlib.h>
 #include <string.h>
 #include "censure.h"
+#include "write.h"
 
 int main(int argc, char const *argv[])
 {
@@ -21,6 +22,7 @@ int main(int argc, char const *argv[])
     char badword[25];   // Bad word of the user
     char **list = NULL; // List of bad words
     int i = 0;          // Loop variable
+    int test = 0;       // Test variable
 
     printf("____________________________________________\n");
     printf("|Welcome  to   the   chat  censor   program|\n");
@@ -28,7 +30,6 @@ int main(int argc, char const *argv[])
 
     do // Do while the user don't want to exit
     {
-
         censorMenu = 1; // Reset the censorMenu loop
 
         // Display menu
@@ -47,7 +48,7 @@ int main(int argc, char const *argv[])
         case 1: // Use the chat
             printf("\n--------------------CHAT--------------------\n");
             printf("Please enter your username:\n");
-            scanf("%s", &username);
+            scanf("%s", username);
             fflush(stdin);
 
             printf("____________________________________________\n");
@@ -55,15 +56,11 @@ int main(int argc, char const *argv[])
             printf("|__________________________________________|\n");
             do // Loop for write into the chat
             {
-                printf("\n");
-                printf("\nWrite here: "), gets(sentence);
-                fflush(stdin);
-                if (sentence != "exit")
-                {
-                    printf("%s: %s", username, censure(sentence, list, i));
-                }
+                writeSentence(sentence, username, list, i, test);
+                test++;
             } while (strcmp(sentence, "exit") != 0); // Exit the loop if the user write "exit"
-            printf("\n%s left the chat\n", username);
+            printf("\n\n%s left the chat\n", username);
+            test = 0;   // Reset the test variable
             choice = 0; // Reset the choice
             break;
 
@@ -85,10 +82,12 @@ int main(int argc, char const *argv[])
                 switch (censorChoice)
                 {
                 case 1: // Add a bad word
-                        // Add a word to a censored list
+                    // Ask the user to enter a bad word
                     printf("Please enter the word you want to censor:\n");
-                    scanf("%s", &badword);
+                    scanf("%s", badword);
                     fflush(stdin);
+
+                    // Add the bad word to the list
                     list = realloc(list, (i + 1) * sizeof(char *));
                     list[i] = malloc(strlen(badword) + 1);
                     strcpy(list[i], badword);
@@ -106,7 +105,7 @@ int main(int argc, char const *argv[])
                     else
                     {
                         printf("Please enter the word you want to uncensor:\n");
-                        scanf("%s", &badword);
+                        scanf("%s", badword);
                         fflush(stdin);
 
                         // Check if the word is'nt already in the list
@@ -161,7 +160,7 @@ int main(int argc, char const *argv[])
             break;
 
         case 3: // Exit
-            printf("\nYou have exited the program\n");
+            printf("\nYou left the program\n");
             menu = 0; // Exit the menu loop
             break;
 
