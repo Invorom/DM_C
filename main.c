@@ -23,6 +23,7 @@ int main(int argc, char const *argv[])
     char **list = NULL; // List of bad words
     int i = 0;          // Loop variable
     int test = 0;       // Test variable
+    char *p, s[100];    // Variables for the fgets
 
     printf("____________________________________________\n");
     printf("|Welcome  to   the   chat  censor   program|\n");
@@ -38,7 +39,16 @@ int main(int argc, char const *argv[])
         printf("1. Use the chat\n");
         printf("2. Censor a word\n");
         printf("3. Exit\n");
-        scanf("%d", &choice);
+        while (fgets(s, sizeof(s), stdin))
+        {
+            choice = strtol(s, &p, 4);
+            if (p == s || *p != '\n')
+            {
+                printf("Please enter a number between 1 and 3: ");
+            }
+            else
+                break;
+        }
         fflush(stdin);
         printf("--------------------------------------------\n");
 
@@ -74,7 +84,16 @@ int main(int argc, char const *argv[])
                 printf("2. Remove a bad word\n");
                 printf("3. See the list of bad words\n");
                 printf("4. Back to the menu\n");
-                scanf("%d", &censorChoice);
+                while (fgets(s, sizeof(s), stdin))
+                {
+                    censorChoice = strtol(s, &p, 5);
+                    if (p == s || *p != '\n')
+                    {
+                        printf("Please enter a number between 1 and 4: ");
+                    }
+                    else
+                        break;
+                }
                 fflush(stdin);
                 printf("--------------------------------------------\n");
 
@@ -147,10 +166,11 @@ int main(int argc, char const *argv[])
 
                 case 4: // Back to the menu
                     censorMenu = 0;
+                    choice = 0; // Reset the choice
                     break;
 
                 default: // If the user enter a wrong censorChoice
-                    printf("Please enter a valid number\n");
+                    printf("Please enter a number between 1 and 4: ");
                     censorChoice = 0; // Reset the censorChoice
                     break;
                 }
@@ -165,7 +185,7 @@ int main(int argc, char const *argv[])
             break;
 
         default: // If the user enter a wrong number
-            printf("Please enter a valid number\n");
+            printf("Please enter a number between 1 and 3: ");
             choice = 0; // Reset the choice
             break;
         }
