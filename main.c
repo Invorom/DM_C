@@ -94,7 +94,6 @@ int main(int argc, char const *argv[])
                     else
                         break;
                 }
-                fflush(stdin);
                 printf("--------------------------------------------\n");
 
                 // Switch case to choose the option
@@ -103,15 +102,39 @@ int main(int argc, char const *argv[])
                 case 1: // Add a bad word
                     // Ask the user to enter a bad word
                     printf("Please enter the word you want to censor:\n");
-                    scanf("%s", badword);
+                    fgets(badword, 25, stdin);
+                    badword[strlen(badword) - 1] = '\0';
                     fflush(stdin);
 
-                    // Add the bad word to the list
-                    list = realloc(list, (i + 1) * sizeof(char *));
-                    list[i] = malloc(strlen(badword) + 1);
-                    strcpy(list[i], badword);
-                    printf("\nThe word \"%s\" is now censored\n", badword);
-                    i++;
+                    // Add the bad word to the list if it's not already in the list without function
+                    if (i == 0)
+                    {
+                        list = malloc(sizeof(char *));
+                        list[i] = malloc(sizeof(char) * strlen(badword));
+                        strcpy(list[i], badword);
+                        printf("The word \"%s\" has been censored\n", badword);
+                        i++;
+                    }
+                    else
+                    {
+                        for (int j = 0; j < i; j++)
+                        {
+                            if (strcmp(list[j], badword) == 0 || strcmp(badword, "exit") == 0)
+                            {
+                                printf("The word \"%s\" is already censored\n", badword);
+                                break;
+                            }
+                            else if (j == i - 1)
+                            {
+                                list = realloc(list, sizeof(char *) * (i + 1));
+                                list[i] = malloc(sizeof(char) * strlen(badword));
+                                strcpy(list[i], badword);
+                                printf("The word \"%s\" has been censored\n", badword);
+                                i++;
+                                break;
+                            }
+                        }
+                    }
                     censorChoice = 0; // Reset the censorChoice
                     break;
 
@@ -124,7 +147,8 @@ int main(int argc, char const *argv[])
                     else
                     {
                         printf("Please enter the word you want to uncensor:\n");
-                        scanf("%s", badword);
+                        fgets(badword, 25, stdin);
+                        badword[strlen(badword) - 1] = '\0';
                         fflush(stdin);
 
                         // Check if the word is'nt already in the list
