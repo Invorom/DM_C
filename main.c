@@ -120,7 +120,7 @@ int main(int argc, char const *argv[])
                         list = malloc(sizeof(char *));
                         list[i] = malloc(sizeof(char) * strlen(badword));
                         strcpy(list[i], badword);
-                        printf("The word \"%s\" has been censored\n", badword);
+                        printf("\nThe word \"%s\" has been censored\n", badword);
                         i++;
                     }
                     else
@@ -129,7 +129,7 @@ int main(int argc, char const *argv[])
                         {
                             if (strcmp(list[j], badword) == 0 || strcmp(badword, "exit") == 0)
                             {
-                                printf("The word \"%s\" is already censored\n", badword);
+                                printf("\nThe word \"%s\" is already censored\n", badword);
                                 break;
                             }
                             else if (j == i - 1)
@@ -137,7 +137,7 @@ int main(int argc, char const *argv[])
                                 list = realloc(list, sizeof(char *) * (i + 1));
                                 list[i] = malloc(sizeof(char) * strlen(badword));
                                 strcpy(list[i], badword);
-                                printf("The word \"%s\" has been censored\n", badword);
+                                printf("\nThe word \"%s\" has been censored\n", badword);
                                 i++;
                                 break;
                             }
