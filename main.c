@@ -98,18 +98,32 @@ int main(int argc, char const *argv[])
                     break;
 
                 case 2: // Remove a bad word
-                        // Remove a word from a censored list
-                    printf("Please enter the word you want to uncensor:\n");
-                    scanf("%s", &badword);
-                    fflush(stdin);
-                    for (int j = 0; j < i; j++)
+                    // Remove a word from a censored list
+                    if (list == NULL || i == 0)
                     {
-                        if (strcmp(list[j], badword) == 0)
+                        printf("Sorry, you can't delete the void\n");
+                    }
+                    else
+                    {
+                        printf("Please enter the word you want to uncensor:\n");
+                        scanf("%s", &badword);
+                        fflush(stdin);
+
+                        // Check if the word is'nt already in the list
+                        for (int j = 0; j < i; j++)
                         {
-                            free(list[j]);
-                            list[j] = list[i - 1];
-                            i--;
-                            printf("\nThe word \"%s\" is now uncensored\n", badword);
+                            if (strcmp(list[j], badword) == 0)
+                            {
+                                free(list[j]);
+                                list[j] = list[i - 1];
+                                i--;
+                                printf("\nThe word \"%s\" is now uncensored\n", badword);
+                                break;
+                            }
+                            else if (j == i - 1)
+                            {
+                                printf("\nSorry, the word \"%s\" is not in the list\n", badword);
+                            }
                         }
                     }
                     censorChoice = 0; // Reset the censorChoice
@@ -117,7 +131,7 @@ int main(int argc, char const *argv[])
 
                 case 3: // See the list of bad words
                     // Display the list of bad words
-                    if (list == NULL)
+                    if (list == NULL || i == 0)
                     {
                         printf("Sorry, it's empty here\n");
                     }
