@@ -103,6 +103,10 @@ int main(int argc, char const *argv[])
                     badword[strlen(badword) - 1] = '\0';
                     fflush(stdin);
 
+                    // Keep only the first word of badword
+                    char *token = strtok(badword, " ");
+                    strcpy(badword, token);
+
                     // Add the bad word to the list if it's not already in the list without function
                     if (i == 0)
                     {
