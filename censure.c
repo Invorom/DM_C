@@ -5,7 +5,7 @@ char *censure(char *str, char *bad_words[], int nb_bad_words)
 {
     char *censured_str = malloc(sizeof(char) * strlen(str));
     char *token = strtok(str, " ");
-    char *lowerToken = token;
+    char lower_token[25];
 
     int i = 0;
     while (token != NULL)
@@ -13,22 +13,26 @@ char *censure(char *str, char *bad_words[], int nb_bad_words)
         int is_bad_word = 0;
 
         // lowerToken
-        for (int j = 0; lowerToken[j] != '\0'; j++)
+        strcpy(lower_token, token);
+        for (int j = 0; lower_token[j] != '\0'; j++)
         {
-            lowerToken[j] = tolower(lowerToken[j]);
+            lower_token[j] = tolower(lower_token[j]);
         }
 
+        // Check if the token is a bad word but works
         for (int j = 0; j < nb_bad_words; j++)
         {
-            if (strcmp(lowerToken, bad_words[j]) == 0)
+            if (strcmp(lower_token, bad_words[j]) == 0)
             {
                 is_bad_word = 1;
                 break;
             }
         }
-        if (is_bad_word)
+
+        // Censure the token
+        if (is_bad_word == 1)
         {
-            for (int j = 0; j < strlen(lowerToken); j++)
+            for (int j = 0; token[j] != '\0'; j++)
             {
                 censured_str[i] = '*';
                 i++;
@@ -36,16 +40,19 @@ char *censure(char *str, char *bad_words[], int nb_bad_words)
         }
         else
         {
-            for (int j = 0; j < strlen(token); j++)
+            for (int j = 0; token[j] != '\0'; j++)
             {
                 censured_str[i] = token[j];
                 i++;
             }
         }
+
+        // Add a space
         censured_str[i] = ' ';
-        i++;
+
+        // Next token
         token = strtok(NULL, " ");
-        lowerToken = token;
+        i++;
     }
     censured_str[i] = '\0';
     return censured_str;
