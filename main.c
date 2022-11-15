@@ -7,6 +7,7 @@ Description: This program is a chat who censure the bad words
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
+#include <ctype.h>
 #include "censure.h"
 #include "write.h"
 
@@ -107,6 +108,12 @@ int main(int argc, char const *argv[])
                     char *token = strtok(badword, " ");
                     strcpy(badword, token);
 
+                    // Transform the badword in lower case
+                    for (int j = 0; badword[j] != '\0'; j++)
+                    {
+                        badword[j] = tolower(badword[j]);
+                    }
+
                     // Add the bad word to the list if it's not already in the list without function
                     if (i == 0)
                     {
@@ -151,6 +158,16 @@ int main(int argc, char const *argv[])
                         fgets(badword, 25, stdin);
                         badword[strlen(badword) - 1] = '\0';
                         fflush(stdin);
+
+                        // Keep only the first word of badword
+                        char *token = strtok(badword, " ");
+                        strcpy(badword, token);
+
+                        // Transform the badword in lower case
+                        for (int j = 0; badword[j] != '\0'; j++)
+                        {
+                            badword[j] = tolower(badword[j]);
+                        }
 
                         // Check if the word is'nt already in the list
                         for (int j = 0; j < i; j++)
